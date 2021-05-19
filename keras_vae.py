@@ -40,7 +40,6 @@ decoder = keras.Model(latent_inputs, decoder_outputs, name="decoder")
 decoder.summary()
 
 
-
 # buiild vae
 class VAE(keras.Model):
     def __init__(self, encoder, decoder, **kwargs):
@@ -93,7 +92,7 @@ class VAE(keras.Model):
 mnist_digits = np.concatenate([x_train, x_test], axis=0)
 mnist_digits = np.expand_dims(mnist_digits, -1).astype("float32") / 255
 
-"""
+
 vae = VAE(encoder, decoder)
 vae.compile(optimizer=keras.optimizers.Adam())
 history = vae.fit(mnist_digits, epochs=30, batch_size=128)
@@ -114,14 +113,14 @@ ax[2].plot(history.history["kl_loss"])
 ax[2].set_ylabel('kl_loss')
 ax[2].set_xlabel('epoch')
 plt.show()
-"""
+
 # load
 vae = VAE(encoder, decoder)
 vae.compile(optimizer=keras.optimizers.Adam())
 vae.built = True
 vae.load_weights("vae.h5")
 
-"""
+
 index = 200
 x = mnist_digits[index]
 x = np.expand_dims(x, 0)
@@ -134,7 +133,6 @@ ax[0].set_title('raw')
 ax[1].imshow(x_decode[0], cmap="Greys_r")
 ax[1].set_title('result')
 plt.show()
-"""
 
 # display grids
 def plot_latent_space(vae, n=30, figsize=15):
@@ -168,7 +166,6 @@ def plot_latent_space(vae, n=30, figsize=15):
     plt.show()
 
 plot_latent_space(vae)
-import pdb; pdb.set_trace()
 
 # cluster z
 def plot_label_clusters(vae, data, labels):
